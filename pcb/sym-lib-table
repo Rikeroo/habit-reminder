@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "HabitTracker-altium-import")(type "KiCad")(uri "${KIPRJMOD}/HabitTracker-altium-import.kicad_sym")(options "")(descr ""))
+  (lib (name "HabitReminder_lib")(type "KiCad")(uri "${KIPRJMOD}/HabitReminder_lib.kicad_sym")(options "")(descr ""))
+)
