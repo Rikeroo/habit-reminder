@@ -84,7 +84,6 @@ void onPressedForDuration() {
   tasks[menuOption].toggle();
   
   Serial.println(tasks[menuOption].getComplete());
-  
 }
 
 void setup() {
@@ -102,7 +101,6 @@ void setup() {
     pixels.setPixelColor(i, pixels.Color(150,0,0));
     pixels.show();
   }
-  
   // Attatch Callbacks for single and long press
   button1.onPressed(buttonPress);
   button1.onPressedFor(duration, onPressedForDuration);
