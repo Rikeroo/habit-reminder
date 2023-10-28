@@ -14,7 +14,10 @@ int boxWidth = 20; // Menu box width
 int symbolX = 109; // Symbol X draw coord
 int symbolY = 16; // Initial symbol Y
 
-int button1Pin = 35; // Left most button pin
+int button1Pin = 32; // Left-most button pin
+int button2Pin = 33; // Middle button
+int button3Pin = 27; // Right-most button
+
 int duration = 2000; // Long Press Duration
 
 // Menu naviagtion parameters
@@ -54,29 +57,23 @@ Task tasks[3] = {task1,task2,task3};
 
 // Define buttons
 EasyButton button1(button1Pin);
+EasyButton button2(button2Pin);
+EasyButton button3(button3Pin);
+
+// Put buttons into Array
+EasyButton buttons[3] = {button1,button2,button3};
+
+// Initialise display
 Adafruit_NeoPixel pixels(numPixels, neoPin, NEO_GRB + NEO_KHZ800);
 
-void buttonPress() {
-  Serial.println("Button pressed");
-  pixels.setPixelColor(1, pixels.Color(0,150,0));
-  pixels.show();
-  
-  // Increment option and reset at end
-  if (menuOption < 2) {
-    menuOption = menuOption + 1;
-  } else {
-    menuOption = 0;
+// Define function for each button (required)
+void onPress1() {bPress(0);}
+void onPress2() {bPress(1);}
+void onPress3() {bPress(2);}
+void bPress (int num) {
+  tasks[num].toggle();
+  Serial.println(num);
   }
-
-  // Debugging
-  Serial.print("Menu Option: ");
-  Serial.println(menuOption);
-  Serial.print("Task text: ");
-  Serial.println(tasks[menuOption].text.data());
-  Serial.print("Task Completeness: ");
-  Serial.println(tasks[menuOption].getComplete());
-  Serial.println("");
-}
 
 void onPressedForDuration() {
   Serial.println("Button Long Press");
@@ -94,6 +91,13 @@ void setup() {
   
   // Initialise Buttons
   button1.begin();
+  button2.begin();
+  button3.begin();
+
+  // Attatch Callbacks for buttons
+  button1.onPressed(onPress1);
+  button2.onPressed(onPress2);
+  button3.onPressed(onPress3);
 
   // Sets task LEDs to default red
   pixels.clear();
@@ -101,9 +105,7 @@ void setup() {
     pixels.setPixelColor(i, pixels.Color(150,0,0));
     pixels.show();
   }
-  // Attatch Callbacks for single and long press
-  button1.onPressed(buttonPress);
-  button1.onPressedFor(duration, onPressedForDuration);
+  
 }
 
 void loop() {
@@ -142,4 +144,6 @@ void loop() {
 
   // Poll buttons
   button1.read();
+  button2.read();
+  button3.read();
 }
