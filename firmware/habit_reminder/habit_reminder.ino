@@ -9,16 +9,61 @@ U8G2_SSD1306_128X64_NONAME_1_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 int neoPin = 5;
 int numPixels = 3;
 
+// Define menu box parameters
 int boxLength = 103; // Menu box length
 int boxWidth = 20; // Menu box width
 int symbolX = 109; // Symbol X draw coord
 int symbolY = 16; // Initial symbol Y
 
+// Define button pins
 int button1Pin = 32; // Left-most button pin
 int button2Pin = 33; // Middle button
 int button3Pin = 27; // Right-most button
 
 int duration = 2000; // Long Press Duration
+
+// Define LED Pins
+int led1Pin = 18;
+int led2Pin = 5;
+int led3Pin = 17;
+
+// Define LED class
+class Led {
+  public:
+    // Atributes
+    int pin;
+    bool lit;
+    // Constructor
+    Led(int x, bool y) {
+      pin = x;
+      lit = y;
+      pinMode(pin, OUTPUT);
+    }
+    void toggle(){
+      if (lit == true) {
+        digitalWrite(pin, LOW);
+      } else {
+        digitalWrite(pin, HIGH);
+      }
+    }
+    void turnOn(){
+      digitalWrite(pin, HIGH);
+    }
+    void turnOff(){
+      digitalWrite(pin, LOW);
+    }
+    bool getStatus(){
+      return lit;
+    }
+};
+
+// Define Led objects - default state on
+Led led1(led1Pin,true);
+Led led2(led2Pin,true);
+Led led3(led3Pin,true);
+
+// Put Led objects into array
+Led leds[3] = {led1,led2,led3};
 
 // Menu naviagtion parameters
 int menuOption = 0;
@@ -74,14 +119,6 @@ void bPress (int num) {
   tasks[num].toggle();
   Serial.println(num);
   }
-
-void onPressedForDuration() {
-  Serial.println("Button Long Press");
-  // Toggles task completeness
-  tasks[menuOption].toggle();
-  
-  Serial.println(tasks[menuOption].getComplete());
-}
 
 void setup() {
   // put your setup code here, to run once:
@@ -142,6 +179,16 @@ void loop() {
     
   } while ( u8g2.nextPage() );
 
+  // Update LED conditions
+  for (int i=0; i<3; i++) {
+    // Turn off Led if task complete
+    if (tasks[i].getComplete() == true) {
+      leds[i].turnOff();
+    } else {
+      leds[i].turnOn();
+    }
+  }
+  
   // Poll buttons
   button1.read();
   button2.read();
