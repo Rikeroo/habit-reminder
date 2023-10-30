@@ -159,13 +159,9 @@ EasyButton buttons[3] = {button1,button2,button3};
 Adafruit_NeoPixel pixels(numPixels, neoPin, NEO_GRB + NEO_KHZ800);
 
 // Define function for each button (required)
-void onPress1() {bPress(0);}
-void onPress2() {bPress(1);}
-void onPress3() {bPress(2);}
-void bPress (int num) {
-  tasks[num].toggle();
-  Serial.println(num);
-  }
+void onPress1() {tasks[1].toggle();}
+void onPress2() {tasks[2].toggle();}
+void onPress3() {tasks[3].toggle();}
 
 void setup() {
   // put your setup code here, to run once:
