@@ -1,11 +1,55 @@
+#include <ESPAsyncWebServer.h>
+#include <AsyncTCP.h>
 #include <Arduino.h>
 #include <EasyButton.h>
 #include <U8g2lib.h>
 #include <Wire.h>
 #include <Adafruit_NeoPixel.h>
+#include <WiFi.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 
 U8G2_SSD1306_128X64_NONAME_1_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 
+// WiFi Details
+const char* ssid = "BLAH";
+const char* password = "BLAH";
+
+// Setup NTP
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP);
+
+// Set web server port number to 80
+WiFiServer server(80);
+
+// Variable to store the HTTP request String heaeder;
+String header;
+
+// HTML web page to handle 3 input fields (input1, input2, input3)
+const char index_html[] PROGMEM = R"rawliteral(
+<!DOCTYPE HTML><html><head>
+  <title>ESP Input Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+  <form action="/get">
+    input1: <input type="text" name="input1">
+    <input type="submit" value="Submit">
+  </form><br>
+  <form action="/get">
+    input2: <input type="text" name="input2">
+    <input type="submit" value="Submit">
+  </form><br>
+  <form action="/get">
+    input3: <input type="text" name="input3">
+    <input type="submit" value="Submit">
+  </form>
+</body></html>)rawliteral";
+
+void notFound(AsyncWebServerRequest *request) {
+  request->send(404, "text/plain", "Not found");
+}
+
+// NeoPixel Constants
 int neoPin = 5;
 int numPixels = 3;
 
@@ -90,6 +134,9 @@ class Task {
     std::string getText(){
       return text;
     }
+    void resetTask(){
+      complete = false;
+    }
 };
 
 // Define Task objects
@@ -125,6 +172,7 @@ void setup() {
   Serial.begin(9600);
   u8g2.begin();
   pixels.begin();
+  WiFi.begin(ssid, password);
   
   // Initialise Buttons
   button1.begin();
@@ -142,21 +190,34 @@ void setup() {
     pixels.setPixelColor(i, pixels.Color(150,0,0));
     pixels.show();
   }
+  // Connect to WiFi
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print (".");
+  }
+
+  timeClient.begin();
   
+  // Print local IP adress
+  Serial.println("");
+  Serial.println("WiFi connected.");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+
+  // Begin server
+  server.begin();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // Listen for incoming clients
+  WiFiClient client = server.available();
+
   u8g2.firstPage();
   do {
     // Draws Menu Boxes and check boxes
     for (int i = 0; i < 3; i++) {
       // Draws Tasks text
-      if (i == menuOption) {
-        u8g2.setFont(u8g2_font_t0_11b_tf);
-      } else {
-        u8g2.setFont(u8g2_font_t0_11_tf);
-      }
+      u8g2.setFont(u8g2_font_t0_11_tf);
       u8g2.drawStr(3,17+(i*22),(tasks[i].text).data());
       
       u8g2.drawRFrame(0,i*22,103,20,3); //Draws Textboxes
@@ -186,6 +247,17 @@ void loop() {
       leds[i].turnOff();
     } else {
       leds[i].turnOn();
+    }
+  }
+
+  // Update time client
+  timeClient.update();
+  Serial.println(timeClient.getHours());
+
+  // Reset Tasks at 1 am
+  if (timeClient.getHours() == 01) {
+    for (int i = 0; i < 3; i++){
+      tasks[i].resetTask();
     }
   }
   
