@@ -9,6 +9,7 @@
 #include <NTPClient.h>
 #include <WiFiUdp.h>
 
+// Initialise Display object
 U8G2_SSD1306_128X64_NONAME_1_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 
 // WiFi Details
@@ -51,7 +52,10 @@ void notFound(AsyncWebServerRequest *request) {
 
 // NeoPixel Constants
 int neoPin = 5;
-int numPixels = 3;
+int numPixels = 5;
+
+// Initialise Neopixels object
+Adafruit_NeoPixel pixels(numPixels, neoPin, NEO_GRB + NEO_KHZ800);
 
 // Define menu box parameters
 int boxLength = 103; // Menu box length
@@ -65,52 +69,6 @@ int button2Pin = 33; // Middle button
 int button3Pin = 27; // Right-most button
 
 int duration = 2000; // Long Press Duration
-
-// Define LED Pins
-int led1Pin = 18;
-int led2Pin = 5;
-int led3Pin = 17;
-
-// Define LED class
-class Led {
-  public:
-    // Atributes
-    int pin;
-    bool lit;
-    // Constructor
-    Led(int x, bool y) {
-      pin = x;
-      lit = y;
-      pinMode(pin, OUTPUT);
-    }
-    void toggle(){
-      if (lit == true) {
-        digitalWrite(pin, LOW);
-      } else {
-        digitalWrite(pin, HIGH);
-      }
-    }
-    void turnOn(){
-      digitalWrite(pin, HIGH);
-    }
-    void turnOff(){
-      digitalWrite(pin, LOW);
-    }
-    bool getStatus(){
-      return lit;
-    }
-};
-
-// Define Led objects - default state on
-Led led1(led1Pin,true);
-Led led2(led2Pin,true);
-Led led3(led3Pin,true);
-
-// Put Led objects into array
-Led leds[3] = {led1,led2,led3};
-
-// Menu naviagtion parameters
-int menuOption = 0;
 
 // Define Task class
 class Task {
@@ -154,9 +112,6 @@ EasyButton button3(button3Pin);
 
 // Put buttons into Array
 EasyButton buttons[3] = {button1,button2,button3};
-
-// Initialise display
-Adafruit_NeoPixel pixels(numPixels, neoPin, NEO_GRB + NEO_KHZ800);
 
 // Define function for each button (required)
 void onPress1() {tasks[1].toggle();}
@@ -240,9 +195,11 @@ void loop() {
   for (int i=0; i<3; i++) {
     // Turn off Led if task complete
     if (tasks[i].getComplete() == true) {
-      leds[i].turnOff();
+      pixels.setPixelColor(i, pixels.Color(150,0,0));
+      pixels.show();
     } else {
-      leds[i].turnOn();
+      pixels.setPixelColor(i, pixels.Color(0,150,0));
+      pixels.show();
     }
   }
 

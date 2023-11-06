@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "habit_reminder_pio",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
