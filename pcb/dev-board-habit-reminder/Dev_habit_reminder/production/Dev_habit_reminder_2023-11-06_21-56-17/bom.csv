@@ -1,0 +1,7 @@
+﻿Designator,Footprint,Quantity,Value,LCSC Part #
+Brd1,128x64OLED_No_Holes,1,SSD1306,
+"D1, D2, D3",LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm,3,WS2812B,
+J1,PinSocket_1x04_P2.54mm_Vertical,1,I2C BREAKOUT,
+JP1,SolderJumper-3_P1.3mm_Bridged12_RoundedPad1.0x1.5mm_NumberLabels,1,SolderJumper_5V_3V3,
+"SW1, SW2, SW3",SW_PUSH_6mm,3,SW_Push,
+U1,ESP32-DevKitC_Shield2,1,ESP32-DevKitC,
