@@ -458,7 +458,7 @@
         "name": "Signal",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.4,
+        "track_width": 0.25,
         "via_diameter": 0.8,
         "via_drill": 0.4,
         "wire_width": 6
@@ -468,7 +468,10 @@
       "version": 3
     },
     "net_colors": null,
-    "netclass_assignments": null,
+    "netclass_assignments": {
+      "Net-(D1-DOUT)": "Signal",
+      "Net-(D2-DOUT)": "Signal"
+    },
     "netclass_patterns": [
       {
         "netclass": "Signal",
