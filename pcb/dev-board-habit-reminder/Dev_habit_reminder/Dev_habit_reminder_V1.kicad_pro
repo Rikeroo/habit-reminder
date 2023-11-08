@@ -510,10 +510,6 @@
         "pattern": "+3.3V"
       },
       {
-        "netclass": "Power",
-        "pattern": "/NEOPIXEL_PWR"
-      },
-      {
         "netclass": "Default",
         "pattern": ""
       }
