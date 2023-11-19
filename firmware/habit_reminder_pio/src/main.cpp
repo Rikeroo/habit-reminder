@@ -13,8 +13,8 @@
 U8G2_SSD1306_128X64_NONAME_1_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 
 // WiFi Details
-const char* ssid = "BLAH";
-const char* password = "BLAH";
+const char* ssid = "VM9220365";
+const char* password = "tmdv5ktLjykt";
 
 // Setup NTP
 WiFiUDP ntpUDP;
@@ -52,7 +52,7 @@ void notFound(AsyncWebServerRequest *request) {
 
 // NeoPixel Constants
 int neoPin = 5;
-int numPixels = 5;
+int numPixels = 3;
 
 // Initialise Neopixels object
 Adafruit_NeoPixel pixels(numPixels, neoPin, NEO_GRB + NEO_KHZ800);
@@ -98,9 +98,9 @@ class Task {
 };
 
 // Define Task objects
-Task task1("Take Vitamins", false);
-Task task2("Do Physio", false);
-Task task3("Check Calendar", false);
+Task task1("Take Vitamins", true);
+Task task2("Do Physio", true);
+Task task3("Dutch Practice", true);
 
 // Put objects into array
 Task tasks[3] = {task1,task2,task3};
@@ -114,9 +114,9 @@ EasyButton button3(button3Pin);
 EasyButton buttons[3] = {button1,button2,button3};
 
 // Define function for each button (required)
-void onPress1() {tasks[1].toggle();}
-void onPress2() {tasks[2].toggle();}
-void onPress3() {tasks[3].toggle();}
+void onPress1() {tasks[0].toggle();Serial.println("b1");}
+void onPress2() {tasks[1].toggle();Serial.println("b2");}
+void onPress3() {tasks[2].toggle();Serial.println("b3");}
 
 void setup() {
   // put your setup code here, to run once:
@@ -138,7 +138,7 @@ void setup() {
   // Sets task LEDs to default red
   pixels.clear();
   for(int i = 0; i < numPixels; i++) {
-    pixels.setPixelColor(i, pixels.Color(150,0,0));
+    pixels.setPixelColor(i, pixels.Color(50,0,0));
     pixels.show();
   }
   // Connect to WiFi
@@ -179,10 +179,10 @@ void loop() {
       int crossY = 16+(i*22);
 
       // Draw cross or tick based on task complete
-      if (tasks[i].getComplete() == false) {
+      if (tasks[i].getComplete() == true) {
         u8g2.setFont(u8g2_font_unifont_t_symbols);
         u8g2.drawGlyph(crossX,crossY, 0x2715);
-      } else if (tasks[i].getComplete() == true){
+      } else if (tasks[i].getComplete() == false){
         u8g2.setFont(u8g2_font_unifont_t_symbols);
         u8g2.drawGlyph(crossX,crossY, 0x2714);
       }
@@ -195,17 +195,17 @@ void loop() {
   for (int i=0; i<3; i++) {
     // Turn off Led if task complete
     if (tasks[i].getComplete() == true) {
-      pixels.setPixelColor(i, pixels.Color(150,0,0));
+      pixels.setPixelColor(i, pixels.Color(50,0,0));
       pixels.show();
     } else {
-      pixels.setPixelColor(i, pixels.Color(0,150,0));
+      pixels.setPixelColor(i, pixels.Color(0,30,0));
       pixels.show();
     }
   }
 
   // Update time client
   timeClient.update();
-  Serial.println(timeClient.getHours());
+  // Serial.println(timeClient.getHours());
 
   // Reset Tasks at 1 am
   if (timeClient.getHours() == 01) {
