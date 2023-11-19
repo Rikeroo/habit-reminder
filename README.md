@@ -1,7 +1,17 @@
 # Habit Reminder
 Low energy physical habit reminder, using RGB LEDs, a small task screen and tactile switches to build useful habits and get tasks done
 
-![Image of working DevBoard V1 prototype](/assets/images/Habit_tracker_devboardv1.jpg)
+<img src="/assets/images/Habit_tracker_devboardv1.jpg" width="500">
+
+## Features
+- OLED screen to display tasks
+- NeoPixel WS281b LED modules to show competion at a glance
+- Tactile buttons to complete tasks
+## Planned Features
+- Integration with ToDoist API, with 2-way sync
+- FreeRTOS Implementation for easy scheduling
+- Speaker for audible task complete sound
+- Enclosure/Stand for flexible display options
 
 ## Learnt from DevBoard V1 Manufacture and build
 - WS2812b fine with 5V supply and 3.3V logic
