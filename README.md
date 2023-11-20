@@ -20,3 +20,4 @@ Low energy physical habit reminder, using RGB LEDs, a small task screen and tact
 - Feet required, or Command strip mounting, or enclosure
 - Moving NeoPixels away from screen would make for easier soldering
 - Add mounting holes to main pcb for enclosure
+- Points/Streaks counter?
