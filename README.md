@@ -5,7 +5,7 @@ Low energy physical habit reminder, using RGB LEDs, a small task screen and tact
 
 ## Features
 - OLED screen to display tasks
-- NeoPixel WS281b LED modules to show competion at a glance
+- NeoPixel WS281b LED modules to show completion at a glance
 - Tactile buttons to complete tasks
 ## Planned Features
 - Integration with ToDoist API, with 2-way sync
