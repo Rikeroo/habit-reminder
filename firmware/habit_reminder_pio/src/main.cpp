@@ -13,8 +13,8 @@
 U8G2_SSD1306_128X64_NONAME_1_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 
 // WiFi Details
-const char* ssid = "VM9220365";
-const char* password = "tmdv5ktLjykt";
+const char* ssid = "SSID";
+const char* password = "PASSWORD";
 
 // Setup NTP
 WiFiUDP ntpUDP;
