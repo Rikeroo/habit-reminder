@@ -1,7 +1,11 @@
 # Habit Reminder
 Low energy physical habit reminder, using RGB LEDs, a small task screen and tactile switches to build useful habits and get tasks done
 
+## DevBoard Prototype:
 <img src="/assets/images/Habit_tracker_devboardv1.jpg" width="500">
+
+## ESP-32 WROOM Board Render:
+<img src="/assets/images/HabitReminderOLED_pcb_render.png" width="500">
 
 ## Features
 - OLED screen to display tasks
