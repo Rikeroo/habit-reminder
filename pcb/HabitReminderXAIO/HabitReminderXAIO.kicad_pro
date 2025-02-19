@@ -446,7 +446,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "HabitReminderOLED.kicad_pro",
+    "filename": "HabitReminderXAIO.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -679,7 +679,7 @@
   "sheets": [
     [
       "1086ac6f-d5b8-4965-abb3-c8986c56cbb3",
-      ""
+      "Root"
     ]
   ],
   "text_variables": {}

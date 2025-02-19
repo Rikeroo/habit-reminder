@@ -1,0 +1,5 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "SSD1306")(type "KiCad")(uri "/home/rikw/Downloads/KiCad-SSD1306-128x64-master/library/SSD1306.pretty")(options "")(descr ""))
+  (lib (name "Button_Switch_SMD")(type "KiCad")(uri "/home/rikw/Downloads/Button_Switch_SMD.pretty")(options "")(descr ""))
+)
