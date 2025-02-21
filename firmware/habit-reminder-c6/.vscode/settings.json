@@ -15,5 +15,6 @@
         "led_strip.h": "c",
         "esp_log.h": "c",
         "gpio.h": "c"
-    }
+    },
+    "idf.flashType": "JTAG"
 }
