@@ -11,6 +11,7 @@
 #include "freertos/task.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
+#include "esp_err.h"
 #include "led_strip.h"
 #include "sdkconfig.h"
 

@@ -3,3 +3,4 @@
 *.lck
 *components/
 *build/
+*esp-idf/
