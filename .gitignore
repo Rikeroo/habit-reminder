@@ -1,3 +1,5 @@
 *.zip
 *production/
 *.lck
+*components/
+*build/
