@@ -1,2 +1,2 @@
-idf_component_register(SRCS "oled_display.c" "blink_example_main.c" "lvgl_ui.c"
+idf_component_register(SRCS "neopixel.c" "main.c" "oled_display.c" "lvgl_ui.c"
                        INCLUDE_DIRS ".")
