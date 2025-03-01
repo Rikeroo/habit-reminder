@@ -1,3 +1,4 @@
+#include "test_lvgl_ui.h"
 #include "lvgl.h"
 
 void lvgl_ui_demo(lv_disp_t *disp)

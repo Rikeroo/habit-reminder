@@ -1,6 +1,6 @@
 *.zip
 *production/
 *.lck
-*components/
+*managed_components/
 *build/
 *esp-idf/

@@ -1,15 +1,28 @@
-#include <oled_display.h>
+#include "oled_display.h"
+#include "neopixel.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 void app_main(void)
 {
-    /* Configure the peripheral according to the LED type */
-    configure_led();
+    /* Initialise OLED with LVGL demo */
+    oled_display_handle_t oled = oled_display_init();
+    oled_display_show_demo(&oled);
+
+    /* Initialise NeoPixel strip with 3 LEDs */
+    neopixel_handle_t leds = neopixel_init(3);
+    uint8_t active_led = 0;
 
     while (1) {
-        ESP_LOGI(TAG, "Turning the LED %s!", s_led_state == true ? "ON" : "OFF");
-        blink_led();
-        /* Toggle the LED state */
-        s_led_state = !s_led_state;
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
+        /* Clear all LEDs */
+        neopixel_clear_all(&leds);
+        
+        /* Light up current LED */
+        neopixel_set_led(&leds, active_led, 0, 50, 0); /* Green */
+        neopixel_refresh(&leds);
+        active_led = (active_led + 1) % 3;
+
+        /* Update rate (500ms per LED)*/
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
 }

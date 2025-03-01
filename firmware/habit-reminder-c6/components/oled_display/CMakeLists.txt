@@ -1,0 +1,10 @@
+idf_component_register(
+    SRCS 
+        "src/oled_display.c" 
+        "src/test_lvgl_ui.c"
+    INCLUDE_DIRS 
+        "include"
+    REQUIRES 
+        esp_lcd
+        esp_lvgl_port
+)

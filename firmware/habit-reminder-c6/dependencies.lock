@@ -38,6 +38,6 @@ direct_dependencies:
 - espressif/esp_lvgl_port
 - espressif/led_strip
 - lvgl/lvgl
-manifest_hash: 7549aec61afad3de9d4872e8a7f90a842681562e6ed2a380f70536d938290f73
+manifest_hash: 723a97833f11527405fa69df5834d848f42a513e8a272cfcdc9dc91c842e9c1a
 target: esp32c6
 version: 2.0.0
