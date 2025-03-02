@@ -10,15 +10,12 @@ static const char *TAG = "main";
 void app_main(void)
 {
     esp_log_level_set("neopixel", ESP_LOG_DEBUG);
-    vTaskDelay(pdMS_TO_TICKS(100));
     /* Initialise OLED with LVGL demo */
-    // oled_display_handle_t oled = oled_display_init();
-    // oled_display_show_demo(&oled);
+    oled_display_handle_t oled = oled_display_init();
+    oled_display_show_demo(&oled);
 
     /* Initialise NeoPixel strip with 3 LEDs */
     neopixel_handle_t leds = neopixel_init(3);
-    neopixel_clear_all(&leds);
-    neopixel_refresh(&leds);
 
     // uint8_t active_led = 0;
     neopixel_set_led(&leds, 0, 0, 0, 0);
