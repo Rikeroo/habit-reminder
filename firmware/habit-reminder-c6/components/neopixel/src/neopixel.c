@@ -1,5 +1,3 @@
-/* Blink Example
-*/
 #include "neopixel.h"
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
@@ -15,33 +13,37 @@ static const char *TAG = "neopixel";
 /* Use project configuration menu (idf.py menuconfig) to choose the GPIO to blink,
    or you can edit the following line and set a number here.
 */
-#define BLINK_GPIO 21 /* D3 on Xiao Esp32-c6*/
-#define SPI_BUS SPI2_HOST
 
 neopixel_handle_t neopixel_init(uint16_t num_leds)
 {
-    neopixel_handle_t handle = {
-        .num_leds = num_leds,
-        .colors = heap_caps_calloc(num_leds, sizeof(neopixel_color_t), MALLOC_CAP_DEFAULT)
-    };
-
-    if (!handle.colors) {
-        ESP_LOGE(TAG, "Failed to allocate memory for LED colors");
-        abort();
-    }
+    ESP_LOGI(TAG, "Initialising strip with %d LEDs", num_leds);
 
     led_strip_config_t strip_config = {
         .strip_gpio_num = BLINK_GPIO,
         .max_leds = num_leds,
     };
 
-    led_strip_spi_config_t spi_config = {
-        .spi_bus = SPI_BUS,
-        .flags.with_dma = true,
+    led_strip_rmt_config_t rmt_config = {
+        .resolution_hz = 0,
     };
 
-    ESP_ERROR_CHECK(led_strip_new_spi_device(&strip_config, &spi_config, &handle.strip_handle));
-    neopixel_clear_all(&handle);
+    neopixel_handle_t handle = {
+        .num_leds = num_leds,
+        .colors = heap_caps_calloc(num_leds, sizeof(neopixel_color_t), MALLOC_CAP_DEFAULT)
+    };
+
+    // Verify inital colors
+    for(int i = 0; i < num_leds; i++) {
+        ESP_LOGI(TAG, "LED %d initial color: R=%d G=%d B=%d",
+        i, handle.colors[i].r, handle.colors[i].g, handle.colors[i].b);
+    }
+
+    if (!handle.colors) {
+        ESP_LOGE(TAG, "Failed to allocate memory for LED colors");
+        abort();
+    }
+
+    ESP_ERROR_CHECK(led_strip_new_rmt_device(&strip_config, &rmt_config, &handle.strip_handle));
 
     return handle;
 }
@@ -77,7 +79,12 @@ void neopixel_set_all(neopixel_handle_t *handle, uint8_t r, uint8_t g, uint8_t b
 
 void neopixel_refresh(neopixel_handle_t *handle)
 {
-    led_strip_refresh(handle->strip_handle);
+    ESP_LOGD(TAG, "Refresh start");
+    esp_err_t err = led_strip_refresh(handle->strip_handle);
+    if(err != ESP_OK){
+        ESP_LOGE(TAG, "Refresh failed: %s", esp_err_to_name(err));
+    }
+    ESP_LOGD(TAG, "Refresh complete");
 }
 
 esp_err_t neopixel_clear_led(neopixel_handle_t *handle, uint16_t index)
@@ -87,7 +94,10 @@ esp_err_t neopixel_clear_led(neopixel_handle_t *handle, uint16_t index)
 
 void neopixel_clear_all(neopixel_handle_t *handle)
 {
-    neopixel_set_all(handle, 0, 0, 0);
+    ESP_LOGI(TAG, "Clearing all LEDs");
+    for (int i = 0; i < handle->num_leds; i++) {
+        handle->colors[i] = (neopixel_color_t){0,0,0};
+    }
     led_strip_clear(handle->strip_handle);
 }
 

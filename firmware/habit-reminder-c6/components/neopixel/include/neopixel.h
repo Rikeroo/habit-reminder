@@ -7,6 +7,9 @@
 extern "C" {
 #endif
 
+#define BLINK_GPIO 21 /* D3 on Xiao Esp32-c6*/
+#define SPI_BUS SPI2_HOST
+
 typedef struct {
     uint8_t r;
     uint8_t g;
