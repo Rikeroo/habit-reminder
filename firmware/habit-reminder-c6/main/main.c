@@ -18,9 +18,9 @@ void app_main(void)
     neopixel_handle_t leds = neopixel_init(3);
 
     // uint8_t active_led = 0;
-    neopixel_set_led(&leds, 0, 0, 0, 0);
-    neopixel_set_led(&leds, 1, 0, 50, 0);
-    neopixel_set_led(&leds, 2, 0, 0, 50);
+    neopixel_set_led(&leds, 0, 5, 0, 0);
+    neopixel_set_led(&leds, 1, 5, 0, 0);
+    neopixel_set_led(&leds, 2, 5, 0, 0);
     vTaskDelay(pdMS_TO_TICKS(100));
 
     neopixel_refresh(&leds);

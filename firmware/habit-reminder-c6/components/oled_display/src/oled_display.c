@@ -112,7 +112,7 @@ oled_display_handle_t oled_display_init(void)
     handle.lvgl_disp = lvgl_port_add_disp(&disp_cfg);
 
     // Set screen rotation
-    lv_disp_set_rotation(handle.lvgl_disp, LV_DISP_ROT_NONE);
+    lv_disp_set_rotation(handle.lvgl_disp, LV_DISP_ROT_180);
 
     return handle;
 }

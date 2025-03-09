@@ -20,5 +20,10 @@
         "stdio.h": "c",
         "sdkconfig.h": "c"
     },
-    "idf.flashType": "JTAG"
+    "idf.flashType": "JTAG",
+    "cSpell.words": [
+        "LOGI",
+        "LVGL",
+        "neopixel"
+    ]
 }
