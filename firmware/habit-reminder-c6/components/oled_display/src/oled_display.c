@@ -18,7 +18,7 @@ static const char *TAG = "oled_display";
 
 #define I2C_BUS_PORT            0
 
-#define LCD_PIXEL_CLOCK_HZ      (400 * 1000)
+#define LCD_PIXEL_CLOCK_HZ      (800 * 1000)
 #define PIN_NUM_SDA             22
 #define PIN_NUM_SCL             23
 #define PIN_NUM_RST             -1
@@ -88,7 +88,7 @@ oled_display_handle_t oled_display_init(void)
     /* Initialise hardware */
     init_hardware(&handle.panel_handle, &handle.io_handle);
 
-    /* Initialies LVGL */
+    /* Initialise LVGL */
     ESP_LOGI(TAG,  "Initialise LVGL");
     const lvgl_port_cfg_t lvgl_cfg = ESP_LVGL_PORT_INIT_CONFIG();
     ESP_ERROR_CHECK(lvgl_port_init(&lvgl_cfg));
@@ -111,19 +111,15 @@ oled_display_handle_t oled_display_init(void)
     // create a lvgl display
     handle.lvgl_disp = lvgl_port_add_disp(&disp_cfg);
 
+    // Set font
+    lv_theme_default_init(handle.lvgl_disp,
+                        lv_palette_main(LV_PALETTE_BLUE),
+                        lv_palette_main(LV_PALETTE_RED),
+                        false,
+                        &lv_font_montserrat_14);
+
     // Set screen rotation
     lv_disp_set_rotation(handle.lvgl_disp, LV_DISP_ROT_180);
 
     return handle;
-}
-
-void oled_display_show_demo(const oled_display_handle_t *handle)
-{
-    ESP_LOGI(TAG, "Display LVGL Scroll Text");
-    // lock the mutex due to the LVGL APIs not being thread-safe
-    if (lvgl_port_lock(0)) {
-        lvgl_ui_demo(handle->lvgl_disp);
-        // Release the mutex
-        lvgl_port_unlock();
-    }
 }

@@ -47,6 +47,15 @@ esp_err_t neopixel_set_led(neopixel_handle_t *handle, uint16_t index,
                         uint8_t r, uint8_t g, uint8_t b);
 
 /**
+ * @brief Set all LED colors
+ * @param handle Initialized NeoPixel handle
+ * @param r Red value (0-255)
+ * @param g Green value (0-255)
+ * @param b Blue value (0-255)
+ */
+void neopixel_set_all(neopixel_handle_t *handle, uint8_t r, uint8_t g, uint8_t b);
+
+/**
  * @brief Update NeoPixels with current color data
  * @param index Index of NeoPixel LED to refresh
  */
