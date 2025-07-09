@@ -63,8 +63,8 @@ void app_main(void)
         if(xQueueReceive(task_queue, &task_index, portMAX_DELAY)) {
             /* Update LED */
             neopixel_set_led(&leds, task_index,
-                            task_states[task_index] ? 0 : 50, /* Green if complete */
-                            task_states[task_index] ? 50 : 0, /* Red if not complete */
+                            task_states[task_index] ? 0 : 50, /* Red */
+                            task_states[task_index] ? 10 : 0, /* Green */
                             0);
 
             /* Update checkbox */

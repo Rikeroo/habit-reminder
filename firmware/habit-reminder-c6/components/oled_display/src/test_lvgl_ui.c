@@ -1,6 +1,8 @@
 #include "test_lvgl_ui.h"
 #include "lvgl.h"
 
+#define TASK_SPACING 16 /* in pixels */
+
 static lv_obj_t *checkboxes[3];
 static lv_style_t strike_style;
 
@@ -11,18 +13,18 @@ void lvgl_ui_demo(lv_disp_t *disp)
     /* Create strike-through style */
     lv_style_init(&strike_style);
     lv_style_set_text_decor(&strike_style, LV_TEXT_DECOR_STRIKETHROUGH);
-    lv_style_set_text_color(&strike_style, lv_color_hex(0x808080));
+    // lv_style_set_text_color(&strike_style, lv_color_hex(0x808080));
 
     /* Create checkboxes with labels */
-    const char *tasks[] = {"Task 1", "Task 2", "Task 3"};
+    const char *tasks[] = {"Dutch", "Vitamins", "Journal"};
     for (int i=0; i <3; i++) {
         checkboxes[i] = lv_checkbox_create(scr);
         lv_checkbox_set_text(checkboxes[i], tasks[i]);
-        lv_obj_align(checkboxes[i], LV_ALIGN_TOP_LEFT, 10, 20 + (i *40));
+        lv_obj_align(checkboxes[i], LV_ALIGN_TOP_LEFT, 0, 0 + (i * TASK_SPACING));
 
         /* Initial Style */
         lv_obj_add_flag(checkboxes[i], LV_OBJ_FLAG_EVENT_BUBBLE);
-        lv_obj_set_style_text_font(checkboxes[i], &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(checkboxes[i], &lv_font_montserrat_12, 0);
     }
 }
 

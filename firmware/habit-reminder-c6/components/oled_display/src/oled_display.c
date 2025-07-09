@@ -116,7 +116,7 @@ oled_display_handle_t oled_display_init(void)
                         lv_palette_main(LV_PALETTE_BLUE),
                         lv_palette_main(LV_PALETTE_RED),
                         false,
-                        &lv_font_montserrat_14);
+                        &lv_font_montserrat_12);
 
     // Set screen rotation
     lv_disp_set_rotation(handle.lvgl_disp, LV_DISP_ROT_180);
